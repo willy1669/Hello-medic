@@ -4,6 +4,7 @@ const healthKitSchema = mongoose.Schema({
     name: String,
     price: Number,
     quantity: Number,
+    image: String,
     description: String,
     user: {
         type: mongoose.Schema.Types.ObjectId, 
