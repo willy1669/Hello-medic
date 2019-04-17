@@ -24,3 +24,13 @@ exports.getHealthKit = function (req, res,){
         console.log("Error : "+exception);
     }
 }
+
+exports.getHealthKitById = function (req, res){
+    try {
+        var id = req.params.id;
+        return service.getHealthKitById(req, res, id);
+    } catch (exception) {
+        console.log("Error : "+exception);
+    }
+}
+
