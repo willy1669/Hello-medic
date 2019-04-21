@@ -81,3 +81,80 @@ exports.loginUser = function (req, res) {
         console.log(exception);
     }
 }
+
+exports.getDoctorById = (req, res) => {
+    var id = req.params.id;
+    try {
+        return service.getDoctorById(req, res, id);
+    } catch (exception) {
+        console.log("Error : "+exception);
+    }
+}
+
+exports.getDoctors = function (req, res,){
+    try {
+        return service.getAllDoctors(req, res, {});
+    } catch(exception) {
+        console.log("Error : "+exception);
+    }
+}
+
+exports.bookAnAppointment = (req, res) => {
+    var data = {
+        user: req.body.user,
+    }
+}
+
+// exports.addProfile = (req, res) => {
+//     data = {
+//         doctor: req.body.doctor
+//         specialty: req.body.specialty,
+//         hospitalName: req.body.hospitalName,
+//         age: req.body.age,
+//         Location: req.body.location,
+//         littleBiogragphy: req.body.littleBiogragphy
+//     }
+//     try {
+//         return service.signUp(req, res, data);
+//     }
+//     catch (exception) {
+//         console.log(exception);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
