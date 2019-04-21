@@ -25,3 +25,13 @@ exports.getHealthKitById = function (req, res, id){
         res.json ({Kit: kit});
     });
 }
+
+exports.searchByTitle = function(req, res, title){
+    model.find({title: { $regex: title, $options: 'gi' }}, function(err, healthKits){
+        if (err){
+            res.json({err: err, message: 'error, search failed'});
+        } else {
+            res.json(healthKits);
+        }
+    })
+}
