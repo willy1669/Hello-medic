@@ -3,10 +3,13 @@ const service = require('../services/healthKitService');
 
 exports.addHealthKit = (req, res) => {
     const data = {
-        name: req.body.name,
+        title: req.body.title,
         price: req.body.price,
         quantity: req.body.quantity,
         admin: req.body.admin,
+        cart: req.body.cart,
+        description: req.body.description
+
        // healthkitCount: req.body.healthkitCount
     }
     try {
@@ -34,3 +37,12 @@ exports.getHealthKitById = function (req, res){
     }
 }
 
+exports.searchHealthKits = function(req, res){
+    try {
+        var options = req.query.title;
+        return service.searchByTitle(req, res, options);
+    } catch (exception){
+        console.log("Error : "+exception);
+    }
+ 
+ }
