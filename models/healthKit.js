@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const healthKitSchema = mongoose.Schema({
-    name: String,
+    title: String,
     price: Number,
     quantity: Number,
     image: String,
