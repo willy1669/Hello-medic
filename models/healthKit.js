@@ -17,7 +17,7 @@ const healthKitSchema = mongoose.Schema({
     cart:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'cart'
-    }
+    },
 })
 
 module.exports = mongoose.model('healthKit', healthKitSchema);
