@@ -5,6 +5,7 @@ const service = require('../services/userService');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const config = require('../config.js')
 
 //Define schema for validating user input
 const schema = joi.object().keys({
@@ -21,7 +22,7 @@ exports.userSignUp = (req, res) => {
         email: req.body.email,
         password: req.body.password,
     }
-    // validating the employer input
+    // validating the user input
     joi.validate({firstname: data.firstname, lastname: data.lastname, email: data.email, password: data.password}, schema, function (err) {
         try{
             if (err) {
@@ -61,34 +62,49 @@ exports.loginUser = function (req, res) {
     });
     try {
         passport.use ('login', new LocalStrategy(
-            model.findOne({email: req.body.email}, function (err, user) {
+            model.findOne({email: req.body.email}, (err, user, done) => {
                 if (err) {
                     res.json({err: err});
                 }
                 if (user && isValidPassword(user, req.body.password)) {
-                    var token = jwt.sign({email: user.email, id: user._id}, '+secret+', {expiresIn: '12h'});
+                    var token = jwt.sign({email: user.email, id: user._id, temporaryToken: req.cartTemporaryId}, config.secret, {expiresIn: '12h'});
+                    console.log("token", jwt.decode(token, config.secret))
                     res.json({userId:user._id, email:user.email, username: user.username, token: token, message: 'Login successful.'});
+                    return done(null, user)
                 }
                 else {
-                    res.json({message: 'Incorrect email or password.'});
-                    console.log(isValidPassword (req.body.password));
-                }
-                console.log(user);
-            }),
-        ));
+                    res.json({message: 'Incorrect email or password.'})
+                    //console.log(isValidPassword (req.body.password))
+            }
+                    console.log(user);
+                })
+        ), function(err, done) {
+            if (err) return done(null, false)
+            if (user) return done(null, user)
+        })
+        
     }
     catch (exception) {
-        console.log(exception);
+        console.log("Error : "+exception);
     }
 }
 
-// exports.bookAnAppointment = (req, res) => {
-//     var data = {
-//         doctor: req.body.doctor,
-//         symptoms: req.body.symptoms,
-//         gender: req.body.gender,
-//         age: req.body.age
-//     }
-//     return service.bookAnAppointment(req, res, data)
-// }
+exports.getAllUsers = (req, res) => {
+    try {
+        return service.getAllUsers(req, res, {});
+    } 
+    catch(exception) {
+        console.log("Error : "+exception);
+    }
+}
 
+exports.logOutUser = (req, res) => {
+    option = req.logout();
+    try {
+        return option
+    }
+    catch (exception) {
+        console.log("Error : "+exception)
+    }
+
+}
