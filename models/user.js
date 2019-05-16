@@ -14,7 +14,11 @@ const userSchema = mongoose.Schema({
     },
     symptoms: String,
     Gender: String,
-    age: Number
+    age: Number,
+    doctor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'doctor'
+    }
 })
 
 module.exports = mongoose.model('user', userSchema);
