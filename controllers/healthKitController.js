@@ -9,8 +9,6 @@ exports.addHealthKit = (req, res) => {
         admin: req.body.admin,
         cart: req.body.cart,
         description: req.body.description
-
-       // healthkitCount: req.body.healthkitCount
     }
     try {
         return service.addhealthKit(req, res, data);
@@ -20,7 +18,7 @@ exports.addHealthKit = (req, res) => {
     }
 }
 
-exports.getHealthKit = function (req, res,){
+exports.getHealthKit = (req, res,) => {
     try {
         return service.getAllHealthKits(req, res, {});
     } catch(exception) {
@@ -28,7 +26,7 @@ exports.getHealthKit = function (req, res,){
     }
 }
 
-exports.getHealthKitById = function (req, res){
+exports.getHealthKitById = (req, res) => {
     try {
         var id = req.params.id;
         return service.getHealthKitById(req, res, id);
@@ -37,12 +35,11 @@ exports.getHealthKitById = function (req, res){
     }
 }
 
-exports.searchHealthKits = function(req, res){
+exports.searchHealthKits = (req, res) => {
     try {
         var options = req.query.title;
         return service.searchByTitle(req, res, options);
     } catch (exception){
         console.log("Error : "+exception);
     }
- 
- }
+}
