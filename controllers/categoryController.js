@@ -1,0 +1,33 @@
+const model = require('../models/category');
+const service = require('../services/categoryService')
+
+exports.createCategory = (req, res) => {
+    data = {
+        name : req.body.name
+    }
+    
+    try {
+        return service.createCategory(req, res, data)
+    }
+    catch (exception) {
+        console.log("Error:" +exception)
+    }
+}
+
+exports.getAllCategories = (req, res) => {
+    try {
+        return service.getAllCategories(req, res, {});
+    } catch(exception) {
+        console.log("Error : "+exception);
+    }
+}
+
+exports.searchBycategory = (req, res) => {
+    const categoryName = req.query.categoryName;
+    try {
+        return service.getAcategory(req, res, categoryName)
+    }
+    catch (exception) {
+        console.log("Error: "+exception)
+    }
+}
