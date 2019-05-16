@@ -1,5 +1,6 @@
 const model = require('../models/healthKit');
-const repository = require('../repositories/healthKitRepository')
+const repository = require('../repositories/healthKitRepository');
+const Kart = require('../models/cart');
 
 exports.addhealthKit =  (req, res, data) => {
     repository.add(data, function(err, healthKit){
@@ -13,7 +14,7 @@ exports.addhealthKit =  (req, res, data) => {
 }
 
 exports.getAllHealthKits = function(req, res, options){
-    repository.getAll(options, '-__v', function(err, HealthKit){
+    model.find(options, '-__v', function(err, HealthKit){
         if (err) res.json({err:err, message:'error, could not retrieve healthKit'});
         res.json(HealthKit);
     });
@@ -35,3 +36,17 @@ exports.searchByTitle = function(req, res, title){
         }
     })
 }
+
+// exports.addHealthKitToCart = (req, res, healthKitId, cart, newCart) => {
+//     repository.getById(healthKitId, function(err, healthKit) {
+//         if (err) res.json({err: err, message: 'healthKitId could not be retrieved'});
+//         console.log(healthKit)
+//     })
+//     Kart.create(cart, function(err, basket) {
+//         console.log(basket)
+//         if (!basket) {
+//             basket =  basket[healthKitId] = {healthKit: healthKit, quantity: quantity, price: price}
+//         }
+//         newCart.push(healthKit)
+//     })
+// }
