@@ -4,6 +4,7 @@ const healthKit = require('../models/healthKit')
 
 
 exports.addToCart = (req, res) => {
+    console.log(req.body)
     data = {
         product: req.body.product,
         quantity: req.body.quantity
@@ -27,8 +28,5 @@ exports.getAllCarts = (req, res) => {
 
 exports.checkOut = (req, res) => {
     user = req.body.user;
-    cartTemporaryId = req.body.cartTemporaryId;
-    totalPrice = req.body.totalPrice;
-    totalHealthKit = req.body.totalHealthKitQuantity;
-    return service.checkOut(req, res, user, cartTemporaryId, totalPrice, totalHealthKit)
+    return service.checkOut(req, res, user)
 }
