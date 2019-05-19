@@ -33,4 +33,12 @@ exports.getProductsById = (req, res) => {
         console.log("Error : "+exception);
     }
 }
-
+exports.deleteProduct = (req, res) => {
+    var option = req.params.option;
+    try {
+        return service.deleteProduct(req, res, option)
+    }
+    catch (exception) {
+        console.log("Error: "+exception)
+    }
+}
