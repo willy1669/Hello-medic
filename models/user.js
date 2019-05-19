@@ -12,13 +12,7 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
          ref: 'cart'
     },
-    symptoms: String,
-    Gender: String,
-    age: Number,
-    doctor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'doctor'
-    }
+    time: Date
 })
 
 module.exports = mongoose.model('user', userSchema);
