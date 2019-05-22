@@ -25,6 +25,6 @@ exports.validateToken =  (req, res, next) => {
 }
 
 GenerateToken = (payload) => {
-  return  jwt.sign(payload,config.secret);
+  return  jwt.sign(payload, config.secret);
 }
 
