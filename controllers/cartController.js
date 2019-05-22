@@ -28,5 +28,5 @@ exports.getAllCarts = (req, res) => {
 
 exports.checkOut = (req, res) => {
     user = req.body.user;
-    return service.checkOut(req, res, user)
+    return service.checkOut(req, res, user, product)
 }
