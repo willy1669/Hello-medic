@@ -7,17 +7,16 @@ cloudinary.config({
     api_secret: 'RceD8SSfVjqHCaK9kuoZyVsbNeE'
 });
 
-exports.uploadToCloud = function(filename){
+exports.uploadToCloud = function(filename) {
     return new Promise(resolve => {
         cloudinary.uploader.upload(filename, function(result) 
         { 
-            //console.log(result);
             resolve({url: result.secure_url, ID: result.public_id});
         });
     });
 }
 
-exports.deleteFromCloud = function(publicID){
+exports.deleteFromCloud = function(publicID) {
     return new Promise(resolve => {
         cloudinary.uploader.destroy(publicID, function(result){
             resolve(result);
