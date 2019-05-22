@@ -6,12 +6,7 @@ const productModel = require('../models/products')
 const mongoose = require('mongoose');
 
 exports.addToCart = (req, res, singleKit, price) => {
-    //console.log(String(singleKit.product))
-    
-    //productModel.findOne({productId: singleKit.item}).exec((err, product) => {
     productModel.findOne({"_id": singleKit.product}).exec((err, products) => {
-        console.log(singleKit.product)
-        console.log(String(singleKit.quantity))
         if (err) {
             res.json({err: err})
         }
@@ -26,10 +21,8 @@ exports.addToCart = (req, res, singleKit, price) => {
                             var newCart  = new model();
                             newCart._id = mongoose.Types.ObjectId(req.cartTemporaryId);
                             newCart.items = [products];
-                            console.log("product", products)
                             newCart.totalCost = price * singleKit.quantity
                             newCart.items[0].quantity = singleKit.quantity
-                            console.log(String(singleKit.quantity))
                             newCart.save((err) => {
                                 if (err) { 
                                     res.json({message: 'eRROR', token : token, data : err})
@@ -42,30 +35,19 @@ exports.addToCart = (req, res, singleKit, price) => {
                         else {
                             console.log("updating new cart", products);
                             console.log(currentCart.totalCost)
-                            //console.log(currentCart.items)
                                 var exist = false;
                             currentCart.items.forEach(kit => {
                                 if (kit._id.toString() === products._id.toString()) {
-                                    console.log("Product", products)
-
-                                    kit.quantity += Number(singleKit.quantity)//+ currentCart.singleKit.quantity
-                                    console.log('-------------------------------------')
-                                    console.log('-------------------------------------')
-                                    console.log("kit Quantity", kit.quantity)
+                                    kit.quantity += Number(singleKit.quantity)
                                     currentCart.totalCost += (Number(products.price) * Number(singleKit.quantity))
                                     exist = true;
-                            
-                                    console.log("update complete")
                                 }
                             });
-                            
                             if (!exist) {
                                 console.log("quan", Number(singleKit.quantity))
                                 currentCart.items.quantity = Number(singleKit.quantity);
                                 currentCart.totalCost += (Number(price) * Number(singleKit.quantity));
                                 currentCart.items.push(products);
-                                
-                                
                             }
                             console.log("check update")
                             console.log(currentCart)
@@ -139,7 +121,9 @@ exports.deleteAProductFromCart = (req, res, cart, product) => {
                         res.json({err: err})
                     }
                     else {
-                        res.jso({data: result,})
+                        if (newProduct) {
+                        res.json({data: result})
+                        }
                     }
                 })
             }
