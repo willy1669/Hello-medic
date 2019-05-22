@@ -88,18 +88,27 @@ exports.addToCart = (req, res, singleKit, price) => {
     
 }
                                            
-exports.checkOut =  (req, res, user) => {
+exports.checkOut =  (req, res, user, products) => {
     userModel.findOne({_id: user}).exec((err, userData) => {
         console.log('userData', userData)
         if (userData) {
             model.findOne({"_id": req.cartTemporaryId}).exec((err, cartData) => {
                 if (cartData) {
-                    res.json({cartDetails: cartData, user: user})
+                    productModel.find(products).exec((err, result) => {
+                        if (result){
+                            cartData.result.forEach(product => {
+                                if (product.id === result.id) {
+                                    product.quantity -= result.quantity;
+                                    res.json({cartDetails: cartData, user: user})
+                                }
+                            })
+                        }
+                    }).populate('products')
+                    
                 }
             })
         }
     })
-    
 }
 
 exports.getAllCarts = (req, res, options) => {
