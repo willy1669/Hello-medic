@@ -36,3 +36,14 @@ exports.getProductsById = function (req, res, id){
         res.json ({product: product});
     });
 }
+
+exports.deleteProduct = (req, res, option) => {
+    model.findByIdAndDelete({"_id": option}).exec((err) => {
+        if (err) {
+            res.json({message: "product id could not be found"})
+        }
+        else {
+            res.json({message: "product deleted successfully"})
+        }
+    })
+}

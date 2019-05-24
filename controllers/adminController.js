@@ -29,7 +29,7 @@ exports.adminSignUp = (req, res) => {
                 res.json({err: err.message});
             } 
             else {
-                const hashPassword = passwordHash.generate(data.password);    //encrypt user password
+                const hashPassword = passwordHash.generate(data.password);    //encrypt admin password
                 data.password = hashPassword;
                 console.log(data.password);
                 return doctorService.signUp(req, res, data);
@@ -71,10 +71,8 @@ exports.loginUser = function (req, res) {
                     res.json({userId:user._id, email:user.email, username: user.username, token: token, message: 'Login successful.'});
                 }
                 else {
-                    res.json({message: 'Incorrect email or password.'});
-                    console.log(isValidPassword (req.body.password));
+                     res.json({message: 'Incorrect email or password.'})
                 }
-                console.log(user);
             }),
         ));
     }

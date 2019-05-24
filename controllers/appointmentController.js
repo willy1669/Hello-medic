@@ -9,10 +9,10 @@ exports.bookAppointment = (req, res,) => {
         age: req.body.age,
         gender: req.body.gender
     }
-    appointmentDate = req.body.Date.prototype.getDate();
-    appointmentStartTime = req.body.Date.prototype.getTime()
+    appointmentDate = req.body.Date();
+    appointmentTime = req.body.appointmentTime
     try {
-        return service.bookAppointment(req, res, doctor, user, data, startDate, appointmentStartTime)
+        return service.bookAppointment(req, res, doctor, user, data, appointmentDate, appointmentTime)
     }
     catch (exception) {
         console.log('Error' +exception);

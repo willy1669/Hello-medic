@@ -142,6 +142,17 @@ exports.createProfile = (req, res) => {
 //     }
 // }
 
+
+exports.doctorProfile = (req, res) => {
+    var id = req.params.id;
+    try {
+        return service.doctorProfile(req, res, id);
+    }
+    catch (exception) {
+        console.log("Error: "+exception)
+    }
+}
+
 exports.getDoctorsByAppointment = (req, res) => {
     appointment = req.body.appointment;
     doctor = req.body.doctor

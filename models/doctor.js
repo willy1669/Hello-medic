@@ -14,11 +14,16 @@ const doctorSchema = mongoose.Schema({
     location: String,
     consultancyFee: Number,
     littleBiography: String,
+    availableDays: {
+        type: Date,
+        from: Date.parse(),
+        To: Date.parse()
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'   
-         },
-    appointmentDate: {
+    },
+    appointmentDates: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'appointment' 
     }

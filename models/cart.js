@@ -14,7 +14,6 @@ const cartSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
-    totals: {type: Number, default: 0}, 
     totalCost: Number
 
 })

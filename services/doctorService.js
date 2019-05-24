@@ -51,10 +51,14 @@ exports.createProfile = (req, res, id, profile) => {
     })
 }
 
-exports.getDoctorsByAppointment = (req, res, doctor, appointment) => {
-    repository.getById().exec((err, doc) => {
-        if (err) {
-            res.json({err: err})
-        }
-    }).populuate(appointment)
+// exports.getDoctorsByAppointment = (req, res, doctor, appointment) => {
+//     repository.getById().exec((err, doc) => {
+//         if (err) {
+//             res.json({err: err})
+//         }
+//     }).populuate(appointment)
+// }
+
+exports.doctorProfile = (req, res, id) => {
+    model.findOne(id).populate()
 }

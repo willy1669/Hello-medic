@@ -6,18 +6,13 @@ const productModel = require('../models/products')
 const mongoose = require('mongoose');
 
 exports.addToCart = (req, res, singleKit, price) => {
-    console.log(String(singleKit.product))
-    
-    //productModel.findOne({productId: singleKit.item}).exec((err, product) => {
-    productModel.findOne({productId: singleKit.product}).exec((err, product) => {
-        console.log(singleKit.product)
-        console.log(String(singleKit.quantity))
+    productModel.findOne({"_id": singleKit.product}).exec((err, products) => {
         if (err) {
             res.json({err: err})
         }
         else {
-            if(product) {
-                if (product.price != Number(price)) {
+            if(products) {
+                if (products.price != Number(price)) {
                     res.json({message: "invalid price"})
                 } 
                 else {
@@ -25,9 +20,9 @@ exports.addToCart = (req, res, singleKit, price) => {
                         if (currentCart == null) { 
                             var newCart  = new model();
                             newCart._id = mongoose.Types.ObjectId(req.cartTemporaryId);
-                            newCart.items = [product];
-                            newCart.totalCost = product.price * singleKit.quantity
-                            console.log(String(singleKit.quantity))
+                            newCart.items = [products];
+                            newCart.totalCost = price * singleKit.quantity
+                            newCart.items[0].quantity = singleKit.quantity
                             newCart.save((err) => {
                                 if (err) { 
                                     res.json({message: 'eRROR', token : token, data : err})
@@ -38,27 +33,21 @@ exports.addToCart = (req, res, singleKit, price) => {
                             });
                         } 
                         else {
-                            console.log("updating new cart", product);
+                            console.log("updating new cart", products);
                             console.log(currentCart.totalCost)
-                            //console.log(currentCart.items)
                                 var exist = false;
                             currentCart.items.forEach(kit => {
-                                if (kit._id.toString() === product._id.toString()) {
-                                    console.log("Product", product)
-
-                                    kit.quantity += Number(product.quantity)//+ currentCart.singleKit.quantity
-                                    console.log('-------------------------------------')
-                                    console.log('-------------------------------------')
-                                    console.log("kit Quantity", kit.quantity)
-                                    currentCart.totalCost += (Number(product.price) * Number(product.quantity))
+                                if (kit._id.toString() === products._id.toString()) {
+                                    kit.quantity += Number(singleKit.quantity)
+                                    currentCart.totalCost += (Number(products.price) * Number(singleKit.quantity))
                                     exist = true;
-                                    console.log("update complete")
                                 }
                             });
-                            
                             if (!exist) {
-                                currentCart.totalCost += (Number(product.price) * Number(product.quantity)); 
-                                currentCart.items.push(product);
+                                console.log("quan", Number(singleKit.quantity))
+                                currentCart.items.quantity = Number(singleKit.quantity);
+                                currentCart.totalCost += (Number(price) * Number(singleKit.quantity));
+                                currentCart.items.push(products);
                             }
                             console.log("check update")
                             console.log(currentCart)
@@ -99,23 +88,30 @@ exports.addToCart = (req, res, singleKit, price) => {
     
 }
                                            
-exports.checkOut = (req, res, user, cartTemporaryId, totalPrice) => {
+exports.checkOut =  (req, res, user, products) => {
     userModel.findOne({_id: user}).exec((err, userData) => {
         console.log('userData', userData)
-            if (userData) {
-            model.findOne({_id: req.cartTemporaryId}).exec((err, cartData) => {
-                console.log("details", req.cartTemporaryId)
+        if (userData) {
+            model.findOne({"_id": req.cartTemporaryId}).exec((err, cartData) => {
                 if (cartData) {
-                    res.json(cartData)
+                    productModel.find(products).exec((err, result) => {
+                        if (result){
+                            cartData.result.forEach(product => {
+                                if (product.id === result.id) {
+                                    product.quantity -= result.quantity;
+                                    res.json({cartDetails: cartData, user: user})
+                                }
+                            })
+                        }
+                    }).populate('products')
                     
                 }
             })
         }
-    
     })
 }
 
-exports.getAllCarts = function(req, res, options) {
+exports.getAllCarts = (req, res, options) => {
     model.find(options, '-__v', function(err, cart) {
         if (err) res.json({err:err, message:'error, could not retrieve healthKit'});
         res.json(cart);
@@ -134,7 +130,9 @@ exports.deleteAProductFromCart = (req, res, cart, product) => {
                         res.json({err: err})
                     }
                     else {
-                        res.jso({data: result})
+                        if (newProduct) {
+                        res.json({data: result})
+                        }
                     }
                 })
             }

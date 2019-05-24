@@ -9,7 +9,7 @@ exports.signUp =  (req, res, data) => {
             res.json ({err: err, message: 'error, user could not be created'});
         } 
         else {
-         res.json ({message: 'user created successfully'});
+         res.json ({message: 'user created successfully', userDetails: data});
         }
     });
 }

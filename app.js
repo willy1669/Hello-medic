@@ -21,7 +21,8 @@ const adminRouter = require('./router/adminRoute');
 const cartRouter = require('./router/cartRoute');
 const firstAidRouter = require('./router/firstAidRoute');
 const productsRouter = require('./router/productsRoute');
-const categoryRouter = require('./router/categoryRoute')
+const categoryRouter = require('./router/categoryRoute');
+const appointmentRouter = require('./router/appointmentRoute');
 
 const port = process.env.PORT || 6000
 app.listen(port, () => {
@@ -69,6 +70,7 @@ app.use('/admin', adminRouter);
 app.use('/cart', cartRouter);
 app.use('/firstAid', firstAidRouter);
 app.use('/products', productsRouter);
-app.use('/category', categoryRouter)
+app.use('/category', categoryRouter);
+app.use('/appointment', appointmentRouter )
 
 module.exports = app;

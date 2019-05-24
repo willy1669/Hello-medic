@@ -6,14 +6,13 @@ const productSchema = mongoose.Schema({
     quantity: Number,
     image: String,
     description: String,
+    inStock: Boolean,
     productId: {
         type    : mongoose.Schema.Types.ObjectId,
         default : mongoose.Types.ObjectId,
         index   : { unique: true }
       },
-    // {type: Number, default: function() {
-    //     return Math.floor(Math.random()*900000000300000000000) + 1000000000000000
-    //   }},
+    
     categories : [{
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'category'
