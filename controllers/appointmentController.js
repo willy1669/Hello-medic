@@ -2,7 +2,6 @@ const model = require('../models/appointment');
 const service = require('../services/appointmentService');
 
 exports.bookAppointment = (req, res,) => {
-    console.log(req.body)
     doctor = req.body.doctor;
     user = req.body.user;
     data = {
@@ -10,10 +9,10 @@ exports.bookAppointment = (req, res,) => {
         age: req.body.age,
         gender: req.body.gender
     }
-    appointmentDate = req.body.appointmentDate;
-    appointmentStartTime = req.body.appointmentStartTime
+    appointmentDate = req.body.Date();
+    appointmentTime = req.body.appointmentTime
     try {
-        return service.bookAppointment(req, res, doctor, user, data, appointmentDate, appointmentStartTime)
+        return service.bookAppointment(req, res, doctor, user, data, appointmentDate, appointmentTime)
     }
     catch (exception) {
         console.log('Error' +exception);
