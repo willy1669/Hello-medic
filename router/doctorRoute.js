@@ -9,6 +9,7 @@ router.post('/login', authMiddleware.validateToken, doctorController.loginUser);
 router.get('/', doctorController.getDoctors);
 router.get('/search/', doctorController.searchDoctors)
 router.post('/createProfile', doctorController.createProfile);
+router.get('/id', doctorController.getDoctorById);
 
 
 module.exports = router;
