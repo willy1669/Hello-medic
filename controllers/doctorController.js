@@ -21,6 +21,7 @@ exports.doctorSignUp = (req, res) => {
         lastname: req.body.lastname,
         email: req.body.email,
         password: req.body.password,
+        created_On : Date.now()
     }
     // validating the doctor input
     joi.validate({firstname: data.firstname, lastname: data.lastname, email: data.email, password: data.password}, schema, function (err) {
@@ -69,20 +70,25 @@ exports.loginUser = function (req, res) {
                 if (doctor && isValidPassword(doctor, req.body.password)) {
                     var token = jwt.sign({email: doctor.email, id: doctor._id, temporaryToken: req.cartTemporaryId}, config.secret, {expiresIn: '12h'});
                     console.log("token", jwt.decode(token, config.secret))
-                    res.json({docotrId:doctor._id, email:doctor.email, token: token, message: 'Login successful.'});
+                    res.json({docotrId: doctor._id, email:doctor.email, token: token, message: 'Login successful.'});
                 }
                 else {
                     res.json({message: 'Incorrect email or password.'});
-                    //console.log(isValidPassword (req.body.password));
                 }
-                console.log(doctor);
-            }),
-        ), function(err) {
-            if (err) res.json({err:err, message: "create an account"})
-            if (doctor == null) {
-
+            }), 
+            function (err) {
+                if (err) {
+                    res.json({err:err, message: "create an account"})
+                }
+                if (doctor == null) {
+                    var data = new model();
+                    data.firstname = firstname;
+                    data.lastname = lastname;
+                    data.email = email;
+                    data.password = password
+                }
             }
-        });
+        ));
     }
     catch (exception) {
         console.log(exception);
@@ -113,7 +119,8 @@ exports.createProfile = (req, res) => {
         hospitalName : req.body.hospitalName,
         littleBiography : req.body.littleBiography,
         location : req.body.location, 
-        consultancyFee : req.body.consultancyFee
+        consultancyFee : req.body.consultancyFee,
+        availableDays: Date
     }
     try {
         return service.createProfile(req, res, id, profile)
