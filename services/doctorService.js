@@ -37,28 +37,13 @@ exports.searchByTitle = (req, res, specialization) => {
 }
 
 exports.createProfile = (req, res, id, profile) => {
-    repository.getById(id, function(err, docId) {
-        if (err) res.json ({err: err, message: "user id not found"})
-        console.log(docId)
-        if (docId != null) {
-            model.create(profile, function(err, newProfile) {
-                if (err) res.json({err: err, message: "profile could not be created"})
-                console.log(profile)
-                res.json(profile)
-            })
+    model.findByIdAndUpdate(id, profile, function(err, docId) {
+        if (err) {
+            res.json ({err: err, message: "user id not found"})
+        } 
+        else {
+                res.json({message: 'profile updated', profile: docId})
         }
-
-    })
+    }).populate('doctor')
 }
 
-// exports.getDoctorsByAppointment = (req, res, doctor, appointment) => {
-//     repository.getById().exec((err, doc) => {
-//         if (err) {
-//             res.json({err: err})
-//         }
-//     }).populuate(appointment)
-// }
-
-exports.doctorProfile = (req, res, id) => {
-    model.findOne(id).populate()
-}
