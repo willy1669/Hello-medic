@@ -90,7 +90,7 @@ exports.loginUser = function (req, res) {
 }
 
 exports.getDoctorById = (req, res) => {
-    var id = req.params.id;
+    var id = req.body.id;
     try {
         return service.getDoctorById(req, res, id);
     } catch (exception) {
@@ -111,7 +111,6 @@ exports.createProfile = (req, res) => {
     var profile = {
         specialization : req.body.specialization,
         hospitalName : req.body.hospitalName,
-        age : req.body.age,
         littleBiography : req.body.littleBiography,
         location : req.body.location, 
         consultancyFee : req.body.consultancyFee
@@ -124,45 +123,16 @@ exports.createProfile = (req, res) => {
     }
 }
 
-
-// exports.addProfile = (req, res) => {
-//     data = {
-//         doctor: req.body.doctor
-//         specialty: req.body.specialty,
-//         hospitalName: req.body.hospitalName,
-//         age: req.body.age,
-//         Location: req.body.location,
-//         littleBiogragphy: req.body.littleBiogragphy
-//     }
-//     try {
-//         return service.signUp(req, res, data);
-//     }
-//     catch (exception) {
-//         console.log(exception);
-//     }
-// }
-
-
-exports.doctorProfile = (req, res) => {
-    var id = req.params.id;
+exports.searchDoctors = (req, res) => {
+    var options = req.body.specialization
     try {
-        return service.doctorProfile(req, res, id);
+        return service.searchBySpecialization(req, res, options)
     }
-    catch (exception) {
-        console.log("Error: "+exception)
+    catch(exception) {
+        console.log("Error: " +exception)
     }
 }
 
-exports.getDoctorsByAppointment = (req, res) => {
-    appointment = req.body.appointment;
-    doctor = req.body.doctor
-    try {
-        return service.getDoctorsByAppointment(appointment, doctor)
-    }
-    catch (exception) {
-        console.log("Error: "+exception)
-    }
-}
 
 
 
