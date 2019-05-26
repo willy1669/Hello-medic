@@ -20,14 +20,14 @@ exports.getAllDoctors = (req, res, options) => {
 }
 
 exports.getDoctorById = (req, res, id) => {
-    repository.getById(id, function (err, employer){
-        if (err) res.json ({err: err, message: 'error, could not get employer by id'});
-        res.json (employer);
+    model.findById(id, function (err, doctor){
+        if (err) res.json ({err: err, message: 'error, could not get doctor by id'});
+        res.json (doctor);
     });
 }
 
-exports.searchByTitle = (req, res, specialization) => {
-    model.find({title: { $regex: specialization, $options: 'gi' }}, function(err, doctors){
+exports.searchBySpecialization = (req, res, specialization) => {
+    model.find({specialization: {$regex: specialization, $options: 'gi' }}, function(err, doctors){
         if (err){
             res.json({err: err, message: 'error, search failed'});
         } else {
