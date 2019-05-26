@@ -22,12 +22,12 @@ exports.getAllDoctors = (req, res, options) => {
 exports.getDoctorById = (req, res, id) => {
     model.findById(id, function (err, doctor){
         if (err) res.json ({err: err, message: 'error, could not get doctor by id'});
-        res.json (doctor);
+        res.json(doctor);
     });
 }
 
-exports.searchBySpecialization = (req, res, specialization) => {
-    model.find({specialization: {$regex: specialization, $options: 'gi' }}, function(err, doctors){
+exports.searchBySpecialization = (req, res, options) => {
+    model.find({specialization: {$regex: options, $options: 'gi' }}, function(err, doctors){
         if (err){
             res.json({err: err, message: 'error, search failed'});
         } else {
