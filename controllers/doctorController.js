@@ -131,7 +131,7 @@ exports.createProfile = (req, res) => {
 }
 
 exports.searchDoctors = (req, res) => {
-    var options = req.body.specialization
+    var options = req.params.specialization
     try {
         return service.searchBySpecialization(req, res, options)
     }
