@@ -42,7 +42,11 @@ exports.createProfile = (req, res, id, profile) => {
             res.json ({err: err, message: "user id not found"})
         } 
         else {
+            if (docId !== null) {
+                docId.profile.availableDays.push(day)
                 res.json({message: 'profile updated', profile: docId})
+            }
+                
         }
     }).populate('doctor')
 }
