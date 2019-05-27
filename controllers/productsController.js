@@ -1,5 +1,6 @@
 const model = require('../models/products');
-const service = require('../services/productsService')
+const service = require('../services/productsService');
+var cloud = require('../cloudinary');
 
 exports.getAllProducts = (req, res) => {
     try {
@@ -15,13 +16,19 @@ exports.createProduct = (req, res) => {
         price: req.body.price,
         quantity: req.body.quantity,
         description: req.body.description,
-        categories: req.body.categories
+        categories: req.body.categories,
+        productImage: req.files[0].path,
+        prdouctImageID: '',
     }
     try {
-        return service.createProduct(req, res, data)
+        cloud.uploadToCloud(data.productImage).then((result)=>{
+            data.productImage = result.url;
+            data.productImageImageID = result.ID;
+            return service.createProduct(req, res, data);
+        });
     }
     catch (exception) {
-        console.log("Error:" +exception)
+        console.log("Error while adding product ->" +exception)
     }
 }
 
