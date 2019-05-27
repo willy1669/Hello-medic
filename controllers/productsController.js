@@ -18,10 +18,10 @@ exports.createProduct = (req, res) => {
         categories: req.body.categories
     }
     try {
-            return service.createProduct(req, res, data)
+        return service.createProduct(req, res, data)
     }
     catch (exception) {
-            console.log("Error:" +exception)
+        console.log("Error:" +exception)
     }
 }
 
@@ -33,6 +33,7 @@ exports.getProductsById = (req, res) => {
         console.log("Error : "+exception);
     }
 }
+
 exports.deleteProduct = (req, res) => {
     var option = req.params.option;
     try {
