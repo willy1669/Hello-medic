@@ -1,6 +1,6 @@
 const model = require('../models/products');
 const service = require('../services/productsService');
-var cloud = require('../cloudinary');
+var cloud = require('../cloudinary')
 
 exports.getAllProducts = (req, res) => {
     try {
