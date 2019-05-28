@@ -117,10 +117,12 @@ exports.createProfile = (req, res) => {
     var profile = {
         specialization : req.body.specialization,
         hospitalName : req.body.hospitalName,
+        age: req.body.age,
         littleBiography : req.body.littleBiography,
         location : req.body.location, 
         consultancyFee : req.body.consultancyFee,
-        availableDays: Date
+        //availableDays: Date,
+        days: Date.toString()
     }
     try {
         return service.createProfile(req, res, id, profile)
