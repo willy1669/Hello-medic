@@ -7,6 +7,8 @@ const productSchema = mongoose.Schema({
     image: String,
     description: String,
     inStock: Boolean,
+    productImage: String,
+    productImageID: String,
     productId: {
         type    : mongoose.Schema.Types.ObjectId,
         default : mongoose.Types.ObjectId,

@@ -1,6 +1,6 @@
 const repository = require('../repositories/categoryRepository');
 const model = require('../models/category');
-//const products = require('../models/products')
+const productModel = require('../models/products')
 
 exports.createCategory =  (req, res, name) => {
     model.create(name, (err, result) => {
@@ -25,42 +25,29 @@ exports.getAcategory = (req, res, category) => {
     function(err, result){
         console.log('results', result)
         try{    
-            if(err) res.status(500).json({err: err, message: 'Data could not be fetched'});
-            else if (result){
-                res.json(result);
-            }else{
-                res.status(404).json({message: 'Not found'});
+            if(err) {
+                res.json ({err: err, message: 'Data could not be fetched'});
             }
-        }catch(exception){
+            else {
+                if (result !== null) {
+                    result.products.forEach(product => {
+                        productModel.findOne(product, function (err, item) {
+                            if (item) {
+                                res.json({data: item})
+                                
+                            }
+                            
+                        }) 
+                                  
+                    });
+                }
+            }
+        } 
+        catch(exception) {
             res.status(520).json({error:exception});
         } 
     })
-     
-   
-        // console.log("Populated products", results);
-        // if (err) {
-        //     res.json({err: 'Oops! There is no result for your search'});
-        // }
-        // else {
-        //     res.json({products: results});
-        // }
-       
-    
 }
+                    
+                
 
-// exports.searchByCategory = (req, res, option) => {
-//     model.findOne({"_id": option})
-//     .populate('products')
-//     .exec((err, result) => {
-//         console.log("results", result)
-//         if (!result) {
-//             res.json({err: 'Oops! There is no result for your search'});
-//         }
-//         else if (result.length >= 1){
-//             res.json(result.products);
-//         }
-//         else {
-//             res.json({message: 'Not found'})
-//         }
-//     })
-// }

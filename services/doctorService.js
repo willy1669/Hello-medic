@@ -20,14 +20,14 @@ exports.getAllDoctors = (req, res, options) => {
 }
 
 exports.getDoctorById = (req, res, id) => {
-    repository.getById(id, function (err, employer){
-        if (err) res.json ({err: err, message: 'error, could not get employer by id'});
-        res.json (employer);
+    model.findById(id, function (err, doctor){
+        if (err) res.json ({err: err, message: 'error, could not get doctor by id'});
+        res.json(doctor);
     });
 }
 
-exports.searchByTitle = (req, res, specialization) => {
-    model.find({title: { $regex: specialization, $options: 'gi' }}, function(err, doctors){
+exports.searchBySpecialization = (req, res, options) => {
+    model.find({specialization: {$regex: options, $options: 'gi' }}, function(err, doctors){
         if (err){
             res.json({err: err, message: 'error, search failed'});
         } else {
@@ -37,28 +37,17 @@ exports.searchByTitle = (req, res, specialization) => {
 }
 
 exports.createProfile = (req, res, id, profile) => {
-    repository.getById(id, function(err, docId) {
-        if (err) res.json ({err: err, message: "user id not found"})
-        console.log(docId)
-        if (docId != null) {
-            model.create(profile, function(err, newProfile) {
-                if (err) res.json({err: err, message: "profile could not be created"})
-                console.log(profile)
-                res.json(profile)
-            })
+    model.findByIdAndUpdate(id, profile, function(err, docId) {
+        if (err) {
+            res.json ({err: err, message: "user id not found"})
+        } 
+        else {
+            if (docId !== null) {
+                docId.profile.availableDays.push(day)
+                res.json({message: 'profile updated', profile: docId})
+            }
+                
         }
-
-    })
+    }).populate('doctor')
 }
 
-// exports.getDoctorsByAppointment = (req, res, doctor, appointment) => {
-//     repository.getById().exec((err, doc) => {
-//         if (err) {
-//             res.json({err: err})
-//         }
-//     }).populuate(appointment)
-// }
-
-exports.doctorProfile = (req, res, id) => {
-    model.findOne(id).populate()
-}
