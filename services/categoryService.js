@@ -31,14 +31,25 @@ exports.getAcategory = (req, res, category) => {
             else {
                 if (result !== null) {
                     result.products.forEach(product => {
-                        productModel.findOne(product, function (err, item) {
-                            if (item) {
-                                res.json({data: item})
-                                
+                        productIndex = 0
+                        productModel.findOne(product,  function (err, item) {
+                            var results = [];
+                            productIndex++;
+                            console.log("productIndex", productIndex)
+                            if (err) {
+                                res.json({err: err})
                             }
-                            
+                            else {
+                                if (productIndex <= result.products.length) {
+                                    console.log("productIndex", result.products)
+                                    results.push(item)
+                                    console.log(results)
+                                    res.json({data: results})
+                                }
+                                //  res.json({data: results})
+                            }
                         }) 
-                                  
+                        
                     });
                 }
             }
