@@ -40,6 +40,7 @@ mongoose.connect('mongodb://localhost:27017/hellomedic', { useNewUrlParser: true
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 app.use(bodyparser.json());
+app.use(express.static('/uploads/thumbnails'))
 
 app.use(cookieParser())
 app.use(session({
@@ -49,6 +50,7 @@ app.use(session({
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
     cookie: {maxAge: 180 * 60 * 1000}
 }));
+
 
 app.use(passport.initialize());
 app.use(passport.session())
