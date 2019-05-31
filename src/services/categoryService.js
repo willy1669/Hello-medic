@@ -20,43 +20,14 @@ exports.getAllCategories = function(req, res, options) {
     });
 }
 
-exports.getAcategory = (req, res, category) => {
-    model.findOne({"name" : {$regex: category, $options: 'i'}} , 
-    function(err, result){
-        console.log('results', result)
-        try{    
-            if(err) {
-                res.json ({err: err, message: 'Data could not be fetched'});
-            }
-            else {
-                if (result !== null) {
-                    result.products.forEach(product => {
-                        productIndex = 0
-                        productModel.findOne(product,  function (err, item) {
-                            var results = [];
-                            productIndex++;
-                            console.log("productIndex", productIndex)
-                            if (err) {
-                                res.json({err: err})
-                            }
-                            else {
-                                if (productIndex <= result.products.length) {
-                                    console.log("productIndex", result.products)
-                                    results.push(item)
-                                    console.log(results)
-                                    res.json({data: results})
-                                }
-                                //  res.json({data: results})
-                            }
-                        }) 
-                        
-                    });
-                }
-            }
-        } 
-        catch(exception) {
-            res.status(520).json({error:exception});
-        } 
+exports.getACategoryById = (req, res, id) => {
+    model.findById(id).exec((err, result) => {
+        if (err) {
+            res.json({err: err})
+        }
+        else {
+            res.json({data: result})
+        }
     })
 }
                     
