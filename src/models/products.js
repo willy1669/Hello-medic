@@ -15,10 +15,10 @@ const productSchema = mongoose.Schema({
         index   : { unique: true }
       },
     
-    categories : [{
+    category : {
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'category'
-    }],
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'user'},
