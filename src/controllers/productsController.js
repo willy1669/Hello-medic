@@ -16,8 +16,8 @@ exports.createProduct = (req, res) => {
         price: req.body.price,
         quantity: req.body.quantity,
         description: req.body.description,
-        categories: req.body.categories,
-        productImage: req.files[0].path,
+        category: req.body.category,
+        productImage: req.files.path,
         prdouctImageID: '',
     }
     try {
