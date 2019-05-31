@@ -35,7 +35,8 @@
     "nodemailer": "^6.1.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "password-hash": "^1.2.2"
+    "password-hash": "^1.2.2",
+    "nodemon": "^1.18.11"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
