@@ -29,6 +29,9 @@ app.listen(port, () => {
     console.log(`server started on port: ${port}`);
 });
 
+app.get('/', (req, res, next) => {
+    res.status(200).json({message: 'HelloWorld!'});
+})
 
 //connecting to mongoose database
 mongoose.Promise = global.Promise;
