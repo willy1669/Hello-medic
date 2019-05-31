@@ -9,7 +9,7 @@ exports.bookAppointment = (req, res,) => {
         age: req.body.age,
         gender: req.body.gender
     }
-    appointmentDate = req.body.Date();
+    appointmentDate = req.body.appointmentDate;
     appointmentTime = req.body.appointmentTime
     try {
         return service.bookAppointment(req, res, doctor, user, data, appointmentDate, appointmentTime)
