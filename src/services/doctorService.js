@@ -43,7 +43,6 @@ exports.createProfile = (req, res, id, profile) => {
         } 
         else {
             if (docProfile !== null) {
-                docProfile.profile.availableDays.push(days)
                 res.json({message: 'profile updated', profile: docProfile})
             }
                 
