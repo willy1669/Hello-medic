@@ -14,13 +14,11 @@ const doctorSchema = mongoose.Schema({
     location: String,
     consultancyFee: Number,
     littleBiography: String,
-    availableDays: [
-        Days = {
-            type: Date,
-            from: Date.parse(),
-            To: Date.parse()
-        } 
-    ],
+    days: Date,
+    availableDays: {
+        from: Date,
+        to: Date
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'   

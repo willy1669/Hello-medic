@@ -22,12 +22,12 @@ exports.getAllCategories = (req, res) => {
     }
 }
 
-exports.searchBycategory = (req, res) => {
-    const categoryName = req.query.categoryName;
+exports.getACategoryById = (req, res) => {
+    var id = req.params.id;
     try {
-        return service.getAcategory(req, res, categoryName)
+        return service.getACategoryById(req, res, id)
     }
     catch (exception) {
-        console.log("Error: "+exception)
+        console.error("Error : " +exception)
     }
 }

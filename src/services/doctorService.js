@@ -37,14 +37,13 @@ exports.searchBySpecialization = (req, res, options) => {
 }
 
 exports.createProfile = (req, res, id, profile) => {
-    model.findByIdAndUpdate(id, profile, function(err, docId) {
+    model.findOneAndUpdate(id, profile, function(err, docProfile) {
         if (err) {
             res.json ({err: err, message: "user id not found"})
         } 
         else {
-            if (docId !== null) {
-                docId.profile.availableDays.push(day)
-                res.json({message: 'profile updated', profile: docId})
+            if (docProfile !== null) {
+                res.json({message: 'profile updated', profile: docProfile})
             }
                 
         }
