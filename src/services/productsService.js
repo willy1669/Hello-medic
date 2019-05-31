@@ -9,16 +9,15 @@ exports.createProduct =  (req, res, data) => {
             res.json ({err: err, message: 'Error, Product could not be created'});
         } 
         else {
-            if (result.categories.length > 0) {
-                result.categories.forEach(element => {
-                    categoryModel.findOne(element, function(err, category){
-                        category.products.push(result._id);
-                        category.save();
-                        if(err) res.json({err: err, message: 'the product could not be added'});
-                    });
-                });
+            if (result.category !== null) {
+                categoryModel.findById(result.category).exec((err, data) => {
+                    if (data) {
+                        data.products.push(result);
+                        data.save()
+                        res.json({data: result, message: 'product created successfully'})
+                    }
+                })
             }
-         res.json ({message: 'product created successfully', product: result});
         }
     })
 }
