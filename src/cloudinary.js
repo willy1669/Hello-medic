@@ -6,9 +6,6 @@ cloudinary.config({
     api_key: '718354861464973',
     api_secret: 'RceD8SSfVjqHCaK9kuoZyVsbNeE'
 });
-
-
-
 exports.uploadToCloud = function(filename) {
     return new Promise(resolve => {
         cloudinary.uploader.upload(filename, function(result) 
