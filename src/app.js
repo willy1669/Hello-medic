@@ -35,8 +35,8 @@ app.get('/', (req, res, next) => {
 
 //connecting to mongoose database
 mongoose.Promise = global.Promise;
-// mongodb://nonny:willy1,.@ds157901.mlab.com:57901/hellomedic
-mongoose.connect('mongodb://localhost:27017/hellomedic', { useNewUrlParser: true })
+mongoose.connect('mongodb://nonny:willy1,.@ds157901.mlab.com:57901/hellomedic', { useNewUrlParser: true })
+//mongoose.connect('mongodb://localhost:27017/hellomedic', { useNewUrlParser: true })
 .then(() => console.log('mongod Db connected'))
 .catch(err => console.log(err))
 
